@@ -3,3 +3,9 @@ build*/
 *.pyc
 .*
 *~
+build
+log
+install
+opencv_debs
+!.devcontainer
+!.vscode
