@@ -47,10 +47,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-dev \
   && rm -rf /var/lib/apt/lists/*
 
-# Install OpenCV
-COPY opencv_debs/OpenCV*aarch64*.deb /tmp
-RUN cd /tmp && apt update && apt install -y ./OpenCV*.deb \
-  && rm -rf /tmp/OpenCV*.deb
+
 
 # bloom and fake
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -77,4 +74,25 @@ RUN if getent passwd ubuntu > /dev/null 2>&1; then \
 RUN apt-get update && apt-get install -y sudo \
   && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME\
   && chmod 0440 /etc/sudoers.d/$USERNAME \
+  && rm -rf /var/lib/apt/lists/*
+
+# Install OpenCV
+
+
+# Copy all OpenCV debs for both architectures to /tmp
+COPY opencv_debs/OpenCV*.deb /tmp/
+
+RUN ARCH=$(uname -m) && \
+    apt update && \
+    if [ "$ARCH" = "aarch64" ]; then \
+        apt install -y /tmp/OpenCV-*-aarch64-*.deb; \
+    elif [ "$ARCH" = "x86_64" ]; then \
+        apt install -y /tmp/OpenCV-*-x86_64-*.deb; \
+    else \
+        echo "Unsupported architecture: $ARCH"; exit 1; \
+    fi && \
+    rm -rf /tmp/OpenCV*.deb
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    devscripts \
   && rm -rf /var/lib/apt/lists/*
