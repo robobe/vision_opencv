@@ -1,0 +1,17 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "rosdep",
+        "type": "shell",
+        "command": "sudo rosdep init && rosdep update --rosdistro=humble",
+        "problemMatcher": [],
+      },
+       {
+        "label": "pack",
+        "type": "shell",
+        "command": "",
+        "problemMatcher": []
+      }
+    ]
+  }
