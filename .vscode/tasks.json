@@ -10,7 +10,10 @@
        {
         "label": "pack",
         "type": "shell",
-        "command": "",
+        "command": "./debian_scripts/pack.sh",
+        "options": {
+          "cwd": "${workspaceFolder}/cv_bridge/"
+        },
         "problemMatcher": []
       }
     ]

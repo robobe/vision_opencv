@@ -9,3 +9,5 @@ install
 opencv_debs
 !.devcontainer
 !.vscode
+debian
+debs
